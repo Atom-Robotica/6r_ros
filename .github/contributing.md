@@ -15,6 +15,7 @@ Perform the following:
     cp -r test_echo_pkg ~/repos/github/6r_ros/packages/
     ```
 2. Check the pull requests, add, commit and push. Branch is _getting-started_.
+3. Finish merge
 
 
 [![TheProjectsGuy Shield](https://img.shields.io/badge/Developer-TheProjectsGuy-blue)](https://github.com/TheProjectsGuy)
