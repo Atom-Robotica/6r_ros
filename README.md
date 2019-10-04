@@ -25,4 +25,4 @@ The following folders are present here
 | Folder name | Purpose |
 | :------: | :---- |
 | [matlab](./matlab/) | All files related to matlab |
-| packages | All the ROS packages created |
+| [packages](./packages/) | All the ROS packages created |
