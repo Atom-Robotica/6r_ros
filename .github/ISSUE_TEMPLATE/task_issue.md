@@ -7,6 +7,8 @@ assignees: ''
 
 ---
 
+Title of the task
+
 **Task list**
 A list of tasks to accomplish
 
