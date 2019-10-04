@@ -5,7 +5,7 @@ You'll be checking out the `simple_robot.urdf` file and run the following comman
 - Start the `roscore` and set parameters
     ```bash
     roscore
-    rosparam set robot_description -t /home/avneesh/ros_workspaces/prj_6r_ws1/src/robot_viz/urdf/simple_robot.urdf
+    rosparam set robot_description -t ~/ros_workspaces/prj_6r_ws1/src/robot_viz/urdf/simple_robot.urdf
     rosparam set use_gui true
     ```
 - Run the nodes for `RViZ`, `robot_state_publisher` and `joint_state_publisher`
