@@ -15,4 +15,9 @@ You'll be checking out the `simple_robot.urdf` file and run the following comman
     rosrun robot_state_publisher robot_state_publisher
     ```
 
+# References
+## Links
+- [URDF](http://wiki.ros.org/urdf/XML) and [XACRO](http://wiki.ros.org/xacro)
+- [Launch](http://wiki.ros.org/roslaunch)
+
 [![TheProjectsGuy Shield](https://img.shields.io/badge/Developer-TheProjectsGuy-blue)](https://github.com/TheProjectsGuy)
