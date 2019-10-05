@@ -15,6 +15,10 @@ You'll be checking out the `simple_robot.urdf` file and run the following comman
     rosrun robot_state_publisher robot_state_publisher
     ```
 
+# Bugs 
+## URDF
+- For some reason, the STL files are not getting parsed in the correct dimensional scale. It's suggested that you scale down the mesh by a 1000.
+
 # References
 ## Links
 - [URDF](http://wiki.ros.org/urdf/XML) and [XACRO](http://wiki.ros.org/xacro)

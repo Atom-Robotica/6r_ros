@@ -2,9 +2,9 @@
 <robot name="simple_robot">
     <link name="base_link">
         <visual>
-            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <origin xyz="0.0 0.0 0.125" rpy="0.0 0.0 0.0"/>
             <geometry>
-                <cylinder radius="1.0" length="0.5"/>
+                <cylinder radius="0.5" length="0.75"/>
             </geometry>
             <material name="base_material">
                 <color rgba="1.0 0.0 0.0 1.0"/>
@@ -15,7 +15,7 @@
         <visual>
             <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
             <geometry>
-                <cylinder radius="1.0" length="0.5"/>
+                <mesh filename="package://robot_viz/urdf/meshes/link1_body.stl" scale="0.001 0.001 0.001" />
             </geometry>
             <material name="link1_material">
                 <color rgba="0.0 0.0 1.0 1.0"/>
