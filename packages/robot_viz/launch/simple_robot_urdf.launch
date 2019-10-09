@@ -2,7 +2,7 @@
 <launch>
     <!-- Command line argumets -->
     <arg name="robot_model" 
-        default="$(find robot_viz)/urdf/simple_robot.urdf"  
+        default="$(find robot_viz)/urdf/robot_builder.urdf"  
         doc="Path to the robot model (URDF)" />
     <arg name="rviz_config"
         default="$(find robot_viz)/rviz/model_viewer.rviz"  
