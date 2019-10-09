@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!-- Launch file for XACRO and URDF based robot filed -->
+<launch>
+    <!-- Command line arguments -->
+    <!-- @robot_model: Full path with name to the robot model -->
+    <arg name="robot_model" 
+        default="$(find robot_viz)/urdf/robot_builder.xacro" 
+        doc="Full path with name to the robot model" />
+    <!-- @rviz_config: Full path with name to the RViZ config file -->
+    <arg name="rviz_config" 
+        default="$(find robot_viz)/rviz/model_viewer.rviz" 
+        doc="Full path with name to the RViZ config file" />
+    <!-- @gui_ctrl: Use GUI for joint_state_controller or not (default: true) -->
+    <arg name="gui_ctrl" default="true" 
+        doc="Use GUI for joint_state_controller or not" />
+    <!-- @use_state_pubs: Use state robot_state_publisher and joint_state_publisher or not (default: true) -->
+    <arg name="use_state_pubs" default="true"
+        doc="Use state robot_state_publisher and joint_state_publisher or not" />
+    <!-- @run_rqt_graph: Run the rqt_graph to show the graph or not (default: false) -->
+    <arg name="run_rqt_graph" default="false"
+        doc="Run the rqt_graph to show the graph or not" />
+    <!-- @rviz_required: Abort the roslaunch if RViZ is closed -->
+    <arg name="rviz_required" default="true"
+        doc="Abort the roslaunch if RViZ is closed" />
+    
+    <!-- Creating ROS parameters on the parameter server -->
+    <!-- robot_description: holds the entire URDF code of the robot -->
+    <param name="robot_description" 
+        command="xacro --check-order $(arg robot_model)" />
+    <!-- use_gui: use GUI based control or not -->
+    <param name="use_gui" value="$(arg gui_ctrl)" />
+
+    <!-- Nodes -->
+    <!-- Main RViZ node that'll start the visualizer -->
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rviz_config)" required="$(arg rviz_required)" />
+    <!-- Start these nodes only if using controllers -->
+    <group if="$(arg use_state_pubs)">
+        <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+        <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+    </group>
+    <!-- Start these if the rqt_graph is supposed to run -->
+    <group if="$(arg run_rqt_graph)">
+        <node name="rqt_graph" pkg="rqt_graph" type="rqt_graph" />
+    </group>
+</launch>

@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<launch>
+    <!-- Command line argumets -->
+    <arg name="robot_model" 
+        default="$(find robot_viz)/urdf/robot_builder.urdf"  
+        doc="Path to the robot model (URDF)" />
+    <arg name="rviz_config"
+        default="$(find robot_viz)/rviz/model_viewer.rviz"  
+        doc="full path of the '.rviz' configuration file to use for RViZ " />
+    <!-- Creating parameters on the ROS parameter server -->
+    <param name="use_gui" value="true" />
+    <param name="robot_description" command="cat $(arg robot_model)" />
+    <!-- Nodes to run -->
+    <node pkg="rviz" type="rviz" name="rviz" args="-d $(arg rviz_config)" required="true" />
+    <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" />
+    <node pkg="joint_state_publisher" type="joint_state_publisher" name="joint_state_publisher" />
+</launch>

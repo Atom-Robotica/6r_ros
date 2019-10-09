@@ -1,0 +1,118 @@
+<?xml version="1.0"?>
+
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="robot_v1">
+    <!-- Properties -->
+    <xacro:property name="link1_mesh" value="package://robot_viz/urdf/meshes/link1_body.stl" />
+    <!-- XACRO macro function declarations -->
+
+    <!-- create_base_link macro -->
+    <!-- name: Namepackage://robot_viz/urdf/meshes/link1_body.stl of the link -->
+    <!-- link_inertia_visual_collision: Code for the entire inertia, visual and collision of the link -->
+    <xacro:macro name="create_base_link" params="name:=base_link **link_inertia_visual_collision">
+        <link name="${name}">
+            <xacro:insert_block name="link_inertia_visual_collision" />
+        </link>
+    </xacro:macro>
+
+    <!-- attach_link macro -->
+    <!-- Creates a child link to a parent. Joint type is revolute and actuation is along Z axis (DH convention) -->
+    <!-- @Parameters -->
+    <!-- parent: Parent link name [default is "base_link"] -->
+    <!-- child: Name of the child link (required) -->
+    <!-- file_path: Path to the mesh file (stl or dae) for the child link -->
+    <!-- mesh_scale: Scaling factor of the mesh that is imported [default is 0.001] -->
+    <!-- min_q: Minimum actuation value of the revolute joint -->
+    <!-- max_q: Maximum actuation value of the revolute joint -->
+    <!-- *joint_origin: The <origin .../> for the joint relation b/w parent and child -->
+    <!-- *collision_geometry: The <collision geometry .../> for the child link -->
+    <!-- **inertia_block: The <inertia .../> for the child link -->
+    <xacro:macro name="attach_link" params="parent:=base_link child file_path mesh_scale:=0.001 min_q max_q *joint_origin *collision_geometry **inertia_block">
+        <link name="${child}">
+            <inertial>
+                <!--    Expected tags
+                    <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                    <mass value="0.0"/>
+                    <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+                -->
+                <xacro:insert_block name="inertia_block" />
+            </inertial>
+            <visual>
+                <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                <geometry>
+                    <mesh filename="${file_path}" scale="${mesh_scale} ${mesh_scale} ${mesh_scale}"/>
+                </geometry>
+                <material name="link_material">
+                    <color rgba="1.0 0.0 0.0 1.0"/>
+                </material>
+            </visual>
+            <collision>
+                <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                <geometry>
+                    <xacro:insert_block name="collision_geometry" />
+                </geometry>
+            </collision>
+        </link>
+        <joint name="joint_${parent}_${child}" type="revolute">
+            <xacro:insert_block name="joint_origin" />
+            <parent link="${parent}"/>
+            <child link="${child}"/>
+            <axis xyz="0.0 0.0 1.0"/>
+            <limit lower="${min_q}" upper="${max_q}" effort="10" velocity="10"/>
+        </joint>
+    </xacro:macro>
+
+    <!-- Base link creation -->
+    <xacro:create_base_link name="base_link">
+        <inertia_visual_collision>
+            <!-- Inertia properties here -->
+            <inertial>
+                <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                <mass value="0.0"/>
+                <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+            </inertial>
+            <!-- Visual properties here -->
+            <visual>
+                <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                <geometry>
+                    <box size="0.1 0.2 0.3"/>
+                </geometry>
+                <material name="base_material">
+                    <color rgba="0.0 1.0 0.0 1.0"/>
+                </material>
+            </visual>
+            <!-- Collision properties here -->
+            <collision>
+                <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                <geometry>
+                    <box size="0.1 0.2 0.3"/>
+                </geometry>
+            </collision>
+        </inertia_visual_collision>
+    </xacro:create_base_link>
+    
+    <!-- Child links -->
+    <!-- Link 1 -->
+    <xacro:attach_link parent="base_link" child="link1" file_path="${link1_mesh}" min_q="${-pi}" max_q="${pi}">
+        <!-- Origin of child frame in parent frame -->
+        <origin xyz="0.0 0.0 0.15" rpy="0.0 0.0 0.0"/>
+        <!-- Collision boundary -->
+        <box size="1 0.2 0.2"/>
+        <!-- Inertial properties of the link -->
+        <inertia_block>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <mass value="0.0"/>
+            <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+        </inertia_block>
+    </xacro:attach_link>
+    <!-- Link 2 -->
+    <xacro:attach_link parent="link1" child="link2" file_path="${link1_mesh}" min_q="${-pi}" max_q="${pi}">
+        <origin xyz="0.0 0.0 0" rpy="0.0 ${-pi / 2} 0.0"/>
+        <box size="1 0.2 0.2"/>
+        <inertia_block>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <mass value="0.0"/>
+            <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+        </inertia_block>
+    </xacro:attach_link>
+    
+</robot>
