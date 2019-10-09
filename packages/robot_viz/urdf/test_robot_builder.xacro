@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+
+<!-- A XACRO file to build the entire articulated manipulators by simply adding 
+    single lines -->
+
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="robot1">
+    <!-- XACRO properties for the meshes -->
+    <xacro:property name="link1_mesh" value="package://robot_viz/urdf/meshes/link1_body.stl" />
+    <link name="base_link">
+        <visual>
+            <origin xyz="0.0 0.0 0.125" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <cylinder radius="0.5" length="0.75"/>
+            </geometry>
+            <material name="base_material">
+                <color rgba="1.0 0.0 0.0 1.0"/>
+            </material>
+        </visual>
+    </link>
+    <link name="link1">
+        <visual>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <mesh filename="${link1_mesh}" scale="0.001 0.001 0.001" />
+            </geometry>
+            <material name="link1_material">
+                <color rgba="0.0 0.0 1.0 1.0"/>
+            </material>
+        </visual>        
+    </link>
+    <joint name="joint1" type="revolute">
+        <origin xyz="0.0 0.0 0.5" rpy="0.0 0.0 0.0"/>
+        <limit lower="0.0" upper="3.1415926" effort="10.0" velocity="6.283"/>
+        <axis xyz="0.0 0.0 1.0"/>
+        <parent link="base_link"/>
+        <child link="link1"/>        
+    </joint>
+</robot>
